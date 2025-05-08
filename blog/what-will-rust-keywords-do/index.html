@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="
+  My personal blog
+"
+    />
+    <title>
+      
+  Nik Revenco 🦀 | What will these reserved Rust keywords do? Theory and speculation
+
+    </title>
+
+    
+      <link
+        rel="stylesheet"
+        href="https://nikrev.com/style.css?h=a9325f829ee5869969f3"
+      />
+    
+
+    
+      
+    
+  </head>
+  <style>
+    .date {
+      margin-bottom: 5px;
+    }
+    .ul {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;      
+    }
+  </style>
+  <body>
+    
+  <header class="space">
+  <a href="https:&#x2F;&#x2F;nikrev.com">&LeftArrow; Home</a>
+  </header>
+
+
+    
+    <main>
+      <h1>What will these reserved Rust keywords do? Theory and speculation</h1>
+      
+        <p class="secondary small">
+          
+            1 April, 2025
+          
+
+          
+          
+
+          
+
+          
+        </p>
+      
+      <div class="space"></div>
+      <p>I found this page which lists all reserved keywords for Rust: https://doc.rust-lang.org/reference/keywords.html</p>
+<p>I did research and compiled a list of speculations / rfcs that use these keywords:</p>
+<ul>
+<li><code>priv</code>: everything in Rust is already private by default<sup class="footnote-reference" id="fr-1-1"><a href="#fn-1">1</a></sup> except trait items, enum variants, and fields in enum variants. Perhaps at some point these can be made opt-in private</li>
+<li><code>become</code>: tail call optimization for recursive functions (https://github.com/rust-lang/rfcs/pull/3407)</li>
+<li><code>abstract</code>, <code>override</code>, <code>final</code>: <a href="https://rust-lang.github.io/rfcs/0342-keywords.html">Was reserved for a possibility of adding "more efficient inheritance"</a><sup class="footnote-reference" id="fr-2-1"><a href="#fn-2">2</a></sup></li>
+<li><code>box</code>: box patterns (https://github.com/rust-lang/rust/issues/29641)</li>
+<li><code>do</code>: In the old days, <code>do</code> was a way to invoke a function that takes a closure as a parameter such as <code>do task::span { println!("Hello, world!"); }</code>.<sup class="footnote-reference" id="fr-2-2"><a href="#fn-2">2</a></sup></li>
+<li><code>macro</code>: declarative macros 2.0 (https://github.com/rust-lang/rust/issues/39412)</li>
+<li><code>typeof</code>: get the type of an expression so you can do <code>let x: typeof("a") = "hello"</code></li>
+<li><code>unsized</code>: syntax sugar for <code>!Sized</code></li>
+<li><code>virtual</code>: Rust used to have "virtual structs" which were implemented as a test, this lead to the <code>virtual</code> keyword. <a href="https://rust-lang.github.io/rfcs/0341-remove-virtual-structs.html">They were later removed, but the keyword was kept.</a></li>
+<li><code>yield</code> and <code>gen</code> (weak): generator functions and blocks (https://github.com/rust-lang/rust/issues/117078)</li>
+<li><code>try</code>: local blocks which the <code>?</code> operator can return from without returning from the function (https://github.com/rust-lang/rust/issues/31436)</li>
+</ul>
+<p><code>unsized</code> only makes sense as sugar for <code>!Sized</code> but is this really necessary? Rust tries hard not to special case the standard library and just adding syntax for a built-in item seems like isn't necessary. I didn't find an RFC for it though so it could be used for more than that</p>
+<p><code>do</code> is used for the <code>do yeet</code> in https://github.com/rust-lang/rust/issues/96373 but the syntax will change when its stabilized so I don't count it</p>
+<footer class="footnotes">
+<ol class="footnotes-list">
+<li id="fn-1">
+<p>This wasn't always the case, <a href="https://github.com/rust-lang/rust/issues/8122">there was a time when not everything was private by default!</a> <a href="#fr-1-1">↩</a></p>
+</li>
+<li id="fn-2">
+<p>Thanks to <a href="https://www.reddit.com/user/steveklabnik1/"><code>u/steveklabnik1</code></a> for the info <a href="#fr-2-1">↩</a> <a href="#fr-2-2">↩2</a></p>
+</li>
+</ol>
+</footer>
+
+    </main>
+
+  </body>
+</html>

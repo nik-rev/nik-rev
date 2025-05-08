@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="
+  My personal blog
+"
+    />
+    <title>
+      
+  Nik Revenco 🦀 | How I install Arch Linux with full disk encryption
+
+    </title>
+
+    
+      <link
+        rel="stylesheet"
+        href="https://nikrev.com/style.css?h=a9325f829ee5869969f3"
+      />
+    
+
+    
+      
+    
+  </head>
+  <style>
+    .date {
+      margin-bottom: 5px;
+    }
+    .ul {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;      
+    }
+  </style>
+  <body>
+    
+  <header class="space">
+  <a href="https:&#x2F;&#x2F;nikrev.com">&LeftArrow; Home</a>
+  </header>
+
+
+    
+    <main>
+      <h1>How I install Arch Linux with full disk encryption</h1>
+      
+        <p class="secondary small">
+          
+            2 September, 2024
+          
+
+          
+          
+
+          
+
+          
+        </p>
+      
+      <div class="space"></div>
+      <p>I've grown to love Arch Linux due to its simplicity and ease of use. However installing it can be a bit of a process, especially if you want to do it with full disk encryption.</p>
+<p>In this post I show you the steps I follow to install it with encryption.</p>
+<span id="continue-reading"></span><h2 id="installation">Installation</h2>
+<p>Go to <a href="https://archlinux.org/download/">arch linux downloads</a> and head over to the <code>geo.mirror.pkgbuild.com</code> link under the "Worldwide" HTTP direct downloads.</p>
+<p>Install the following files from there:</p>
+<ul>
+<li><code>archlinux-####.##.##-x86_64.iso</code></li>
+<li><code>archlinux-####.##.##-x86_64.iso.sig</code></li>
+</ul>
+<p>It is important to verify the signature of the file, to ensure that is has not been tampered with:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">pacman-key</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>v</span> arch.iso.sig</span>
+</span></code></pre>
+<p>Flash the <code>.iso</code> into a device, for instance <code>/dev/sdc</code>:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> cp arch.iso /dev/sdc</span>
+</span></code></pre>
+<p>Boot the live environment.</p>
+<p><a href="https://wiki.archlinux.org/title/Installation_guide#Connect_to_the_internet">Connect to the internet.</a></p>
+<p>Setup the disk:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sgdisk</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>Z</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>n1</span>:0:+1024M<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>t1</span>:ef00<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>c1</span>:efi<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>n2</span>:0:+4096M<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>t2</span>:ef02<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>c2</span>:boot<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>N3</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>t3</span>:8309<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>c3</span>:root /dev/sda</span>
+</span></code></pre>
+<p>Load the encryption modules:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">modprobe</span></span><span class="z-meta z-function-call z-arguments z-shell"> dm-crypt</span> <span class="z-keyword z-operator z-logical z-and z-shell">&amp;&amp;</span> <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">modprobe</span></span><span class="z-meta z-function-call z-arguments z-shell"> dm-mod</span>
+</span></code></pre>
+<p>Set up the encryption and then open it:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cryptsetup</span></span><span class="z-meta z-function-call z-arguments z-shell"> luksFormat<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>s</span> 512<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>h</span> sha512 /dev/sda3</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cryptsetup</span></span><span class="z-meta z-function-call z-arguments z-shell"> open /dev/sda3 luks_lvm</span>
+</span></code></pre>
+<p>Create the volume and volume group:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">pvcreate</span></span><span class="z-meta z-function-call z-arguments z-shell"> /dev/mapper/luks_lvm</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">vgcreate</span></span><span class="z-meta z-function-call z-arguments z-shell"> arch /dev/mapper/luks_lvm</span>
+</span></code></pre>
+<p>Create a volume for your swap space. A good size for this is your RAM size (find out with <code>free -h</code>) + 2GB.</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">lvcreate</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>n</span> swap<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>L</span> 18G arch</span>
+</span></code></pre>
+<p>Use entire disk space for your root volume:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">lvcreate</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>n</span> root<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>l</span> +100<span class="z-meta z-group z-expansion z-job z-shell"><span class="z-punctuation z-definition z-variable z-job z-shell">%</span><span class="z-variable z-other z-readwrite z-shell">FREE</span></span> arch</span>
+</span></code></pre>
+<p>Create filesystems:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mkfs.fat</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>F32</span> /dev/sda1</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mkfs.ext4</span></span><span class="z-meta z-function-call z-arguments z-shell"> /dev/sda2</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mkfs.btrfs</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>L</span> root /dev/mapper/arch-root</span>
+</span></code></pre>
+<p>Setup swap device:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mkswap</span></span><span class="z-meta z-function-call z-arguments z-shell"> /dev/mapper/arch-swap</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">swapon</span></span><span class="z-meta z-function-call z-arguments z-shell"> /dev/mapper/arch-swap</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">swapon</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>a</span></span>
+</span></code></pre>
+<p>Mount Root, Boot and EFI:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mkdir</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>p</span> /mnt/boot /mnt/boot/efi</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mount</span></span><span class="z-meta z-function-call z-arguments z-shell"> /dev/mapper/arch-root /mnt</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mount</span></span><span class="z-meta z-function-call z-arguments z-shell"> /dev/sda2 /mnt/boot</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mount</span></span><span class="z-meta z-function-call z-arguments z-shell"> /dev/sda1 /mnt/boot/efi</span>
+</span></code></pre>
+<p>Install Arch:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">pacstrap</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>K</span> /mnt base sof-firmware base-devel linux linux-firmware neovim btrfs-progs lvm2 grub efibootmgr zsh</span>
+</span></code></pre>
+<p>Load the file table and chroot.</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">genfstab</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>U</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>p</span> /mnt <span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> /mnt/etc/fstab</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">arch-chroot</span></span><span class="z-meta z-function-call z-arguments z-shell"> /mnt /bin/bash</span>
+</span></code></pre>
+<p>Add encryption hooks:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> sed<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>i</span> <span class="z-string z-quoted z-single z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&#39;</span>/^HOOKS=.*block/s/block /block encrypt lvm2 /<span class="z-punctuation z-definition z-string z-end z-shell">&#39;</span></span> /etc/mkinitcpio.conf</span>
+</span></code></pre>
+<p>Setup grub on efi partition:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">grub-install</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>efi-directory</span><span class="z-keyword z-operator z-assignment z-option z-shell">=</span>/boot/efi</span>
+</span></code></pre>
+<p>Add cryptdevice to linux commandline arguments:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sed</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>i</span> <span class="z-string z-quoted z-single z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&#39;</span>/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/&quot;$/ root=\/dev\/mapper\/arch-root cryptdevice=UUID=<span class="z-punctuation z-definition z-string z-end z-shell">&#39;</span></span><span class="z-meta z-group z-expansion z-command z-parens z-shell"><span class="z-punctuation z-definition z-variable z-shell">$</span><span class="z-punctuation z-section z-parens z-begin z-shell">(</span><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">blkid</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>s</span> UUID<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>o</span> value /dev/sda3</span><span class="z-punctuation z-section z-parens z-end z-shell">)</span></span><span class="z-string z-quoted z-single z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&#39;</span>:luks_lvm&quot;/<span class="z-punctuation z-definition z-string z-end z-shell">&#39;</span></span> /etc/default/grub</span>
+</span></code></pre>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mkdir</span></span><span class="z-meta z-function-call z-arguments z-shell"> /secure</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">dd</span></span><span class="z-meta z-function-call z-arguments z-shell"> if=/dev/random of=/secure/root_keyfile.bin bs=512 count=8</span>
+</span></code></pre>
+<p>Change permissions on the secure files:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">chmod</span></span><span class="z-meta z-function-call z-arguments z-shell"> 000 /secure/<span class="z-keyword z-operator z-regexp z-quantifier z-shell">*</span></span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">chmod</span></span><span class="z-meta z-function-call z-arguments z-shell"> 600 /boot/initramfs<span class="z-keyword z-operator z-regexp z-quantifier z-shell">*</span></span>
+</span></code></pre>
+<p>Add to partitions:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cryptsetup</span></span><span class="z-meta z-function-call z-arguments z-shell"> luksAddKey /dev/sda3 /secure/root_keyfile.bin</span>
+</span></code></pre>
+<p>Recognize root keyfile:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sed</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>i</span> <span class="z-string z-quoted z-single z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&#39;</span>s/FILES=()/FILES=(\/secure\/root_keyfile.bin)/<span class="z-punctuation z-definition z-string z-end z-shell">&#39;</span></span> your_file</span>
+</span></code></pre>
+<p>Reload Linux:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">mkinitcpio</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>p</span> linux</span>
+</span></code></pre>
+<p>Create grub config:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">grub-mkconfig</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>o</span> /boot/grub/grub.cfg</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">grub-mkconfig</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>o</span> /boot/efi/EFI/arch/grub.cfg</span>
+</span></code></pre>
+<p>Create a symlink for the timezone:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">ln</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>sf</span> /usr/share/zoneinfo/Europe/London /etc/localtime</span>
+</span></code></pre>
+<p>Set up <a href="https://wiki.archlinux.org/title/Network_Time_Protocol_daemon">NTP</a>:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>[Time]\nNTP=0.arch.pool.ntp.org 1.arch.pool.ntp.org 2.arch.pool.ntp.org 3.arch.pool.ntp.org\nFallbackNTP=0.pool.ntp.org 1.pool.ntp.org<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> /etc/systemd/timesyncd.conf</span>
+</span></code></pre>
+<p>Enable timesyncd:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">systemctl</span></span><span class="z-meta z-function-call z-arguments z-shell"> enable systemd-timesyncd.service</span>
+</span></code></pre>
+<p>Configure network manager, in order to use wifi:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">pacman</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>S</span> networkmanager</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">systemctl</span></span><span class="z-meta z-function-call z-arguments z-shell"> enable NetworkManager.service</span>
+</span></code></pre>
+<p>Set up your locale:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sed</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>i</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>e</span> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>/^#<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span>en_GB.UTF-8<span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>/s/^#//<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> /mnt/etc/locale.gen</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>KEYMAP=us<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> /etc/vconsole.conf</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>LANG=en_GB.UTF-8<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> /etc/locale.conf</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">locale-gen</span></span>
+</span></code></pre>
+<p>Add your hostname:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>arch<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> /etc/hostname</span>
+</span></code></pre>
+<p>Secure the root user by setting a password:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">passwd</span></span>
+</span></code></pre>
+<p>Add your user, for me it is <code>e</code> because it's 1 character and fast to type:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">useradd</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>m</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>k</span> /var/empty<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>G</span> wheel<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>s</span> /bin/zsh e</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">passwd</span></span><span class="z-meta z-function-call z-arguments z-shell"> e</span>
+</span></code></pre>
+<p>Add the wheel group to sudoers, to be able to execute commands as root with <code>sudo</code>:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-support z-function z-echo z-shell">echo</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>%wheel ALL=(ALL:ALL) ALL<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> /etc/sudoers.d/wheel</span>
+</span></code></pre>
+<p>Install amd or intel microcode depending on which processor you use (<code>lscpu</code>):</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">pacman</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>S</span> amd-ucode <span class="z-comment z-line z-number-sign z-shell"><span class="z-punctuation z-definition z-comment z-begin z-shell">#</span></span><span class="z-comment z-line z-number-sign z-shell"> or intel-ucode</span><span class="z-comment z-line z-number-sign z-shell">
+</span></span></span></code></pre>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-support z-function z-exit z-shell">exit</span></span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">umount</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>R</span> /mnt</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">reboot</span></span>
+</span></code></pre>
+<p>Put UEFI Secure Boot into "Setup Mode":</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> sbctl create-keys</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> sbctl enroll-keys<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>m</span></span>
+</span></code></pre>
+<p>And with that, we're done! We just installed Arch with full disk encryption. Now you can officially say "<em>I use arch BTW</em>" :)</p>
+
+    </main>
+
+  </body>
+</html>

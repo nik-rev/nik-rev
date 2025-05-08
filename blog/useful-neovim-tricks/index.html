@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="
+  My personal blog
+"
+    />
+    <title>
+      
+  Nik Revenco 🦀 | Neovim tips and life hacks that significantly improved my productivity
+
+    </title>
+
+    
+      <link
+        rel="stylesheet"
+        href="https://nikrev.com/style.css?h=a9325f829ee5869969f3"
+      />
+    
+
+    
+      
+    
+  </head>
+  <style>
+    .date {
+      margin-bottom: 5px;
+    }
+    .ul {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;      
+    }
+  </style>
+  <body>
+    
+  <header class="space">
+  <a href="https:&#x2F;&#x2F;nikrev.com">&LeftArrow; Home</a>
+  </header>
+
+
+    
+    <main>
+      <h1>Neovim tips and life hacks that significantly improved my productivity</h1>
+      
+        <p class="secondary small">
+          
+            11 September, 2024
+          
+
+          
+          
+
+          
+
+          
+        </p>
+      
+      <div class="space"></div>
+      <p>I've been using Neovim for quite some time and have went through the entire Wiki. I would like to share some of my most loved tricks that have really skyrocketed my productivity.</p>
+<span id="continue-reading"></span><h2 id="basic-navigation">Basic Navigation</h2>
+<ul>
+<li><code>h</code>, <code>l</code> ~ Move left, right by one character</li>
+<li><code>j</code>, <code>k</code> ~ Move down, up by one line</li>
+<li><code>+</code>, <code>-</code> ~ Move to the next/previous non-whitespace character on the line</li>
+<li><code>^</code> ~ Move to the first non-whitespace character</li>
+<li><code>_</code> ~ Move to the first character on the line (also takes a count)</li>
+<li><code>$</code> ~ Move to the last character on the line</li>
+<li><code>G</code> ~ Move to the end of the file</li>
+<li><code>gg</code> ~ Move to the beginning of the file</li>
+<li><code>40gg</code> ~ Jump to line 40</li>
+<li><code>%</code> ~ Jump to matching parenthesis or bracket</li>
+<li><code>t{char}</code> ~ Jump before the next occurrence of <code>{char}</code></li>
+<li><code>f{char}</code> ~ Jump to the next occurrence of <code>{char}</code></li>
+<li><code>T{char}</code> / <code>F{char}</code> ~ Reverse of <code>t</code> and <code>f</code></li>
+<li><code>,</code> and <code>;</code> ~ Repeat <code>t</code>, <code>T</code>, <code>f</code>, <code>F</code> in opposite/same direction</li>
+</ul>
+<h2 id="searching">Searching</h2>
+<ul>
+<li><code>/pattern</code> ~ Search forward</li>
+<li><code>?pattern</code> ~ Search backward</li>
+<li><code>#</code> and <code>*</code> ~ Search for the identifier under the cursor (backward/forward)</li>
+<li><code>/pattern/e</code> ~ Place cursor on last character of pattern</li>
+<li><code>/pattern/e+1</code> ~ Place cursor one character to the right of match</li>
+<li><code>/apple\C</code> ~ Case-sensitive search</li>
+<li><code>:%s/pattern//n</code> ~ Count occurrences of pattern</li>
+<li><code>/\%V</code> ~ Search inside visual selection</li>
+</ul>
+<h2 id="editing">Editing</h2>
+<ul>
+<li><code>i</code>, <code>I</code> ~ Insert at cursor / start of line</li>
+<li><code>a</code>, <code>A</code> ~ Append after cursor / end of line</li>
+<li><code>gi</code> ~ Insert at last edit position</li>
+<li><code>o</code>, <code>O</code> ~ Open new line below / above and enter insert mode</li>
+<li><code>r{char}</code> ~ Replace character under cursor</li>
+<li><code>J</code> ~ Join line with next one</li>
+<li><code>gJ</code> ~ Join lines without inserting space</li>
+<li><code>xp</code> ~ Swap two characters</li>
+<li><code>D</code>, <code>Y</code>, <code>C</code> ~ Instead of <code>d$</code>, <code>y$</code>, <code>c$</code></li>
+<li><code>gq</code> ~ Wrap long lines</li>
+</ul>
+<h2 id="case-modification">Case Modification</h2>
+<ul>
+<li><code>guu</code> / <code>gUU</code> / <code>g~~</code> ~ Make current line lowercase, uppercase, or toggle case</li>
+<li><code>gu</code>, <code>gU</code>, <code>g~</code> ~ Operator to change case</li>
+</ul>
+<h2 id="copying-deleting">Copying &amp; Deleting</h2>
+<ul>
+<li><code>yy</code> / <code>dd</code> ~ Yank/Delete entire line</li>
+<li><code>yib</code> ~ Yank inside <code>()</code></li>
+<li><code>d/hello</code> ~ Delete until "hello"</li>
+<li><code>d/hello/e</code> ~ Delete up to and including "hello"</li>
+<li><code>dk</code> / <code>dj</code> ~ Delete current and previous/next line</li>
+<li><code>gp</code> / <code>gP</code> ~ Paste like <code>p</code> / <code>P</code> but leave cursor after pasted text</li>
+</ul>
+<h2 id="visual-mode-tricks">Visual Mode Tricks</h2>
+<ul>
+<li><code>CTRL v</code> ~ Visual block mode</li>
+<li><code>&lt;</code> / <code>&gt;</code> ~ Dedent/Indent selected text</li>
+<li><code>I</code> in visual block ~ Insert text at the beginning of each line</li>
+<li><code>$A</code> in visual block ~ Append text at the end of each line</li>
+<li><code>o</code> ~ Jump to the other end of the selection</li>
+<li><code>gv</code> ~ Reselect last visual selection</li>
+<li><code>g CTRL v</code> ~ Increment each line numerically (e.g., <code>0 0 0 0</code> ~ <code>1 2 3 4</code>)</li>
+</ul>
+<h2 id="window-management">Window Management</h2>
+<ul>
+<li><code>CTRL wx</code> ~ Swap windows</li>
+<li><code>CTRL wv</code> ~ Split vertically</li>
+<li><code>CTRL ws</code> ~ Split horizontally</li>
+<li><code>CTRL wq</code> ~ Quit window</li>
+<li><code>CTRL w=</code> ~ Equalize window sizes</li>
+</ul>
+<h2 id="useful-operators-motions">Useful Operators &amp; Motions</h2>
+<ul>
+<li><code>vap</code> ~ Select around paragraph</li>
+<li><code>[{</code>, <code>]{</code>, <code>[(</code>, <code>](</code> ~ Move to last/next unmatched <code>{</code>, <code>(</code></li>
+<li><code>g;</code> ~ Jump to previous insert location</li>
+<li><code>g,</code> ~ Jump to next insert location</li>
+<li><code>''</code> ~ Jump to before last jump</li>
+</ul>
+<h2 id="command-line-mode-tricks">Command-line Mode Tricks</h2>
+<ul>
+<li><code>CTRL r+</code> ~ Paste from system clipboard</li>
+<li><code>CTRL u</code> ~ Delete all characters</li>
+<li><code>CTRL g</code> / <code>CTRL t</code> ~ Next/previous match in search results</li>
+<li><code>:%norm</code> ~ Apply a command to every line (<code>:%norm $ciwhello</code>)</li>
+<li><code>:g/^#/d</code> ~ Delete all comments from a Bash file</li>
+<li><code>:g/foo/s/bar/baz/g</code> ~ Replace "bar" with "baz" in lines containing "foo"</li>
+<li><code>g&amp;</code> ~ Repeat last substitution</li>
+</ul>
+<h2 id="clipboard-registers">Clipboard &amp; Registers</h2>
+<ul>
+<li><code>gx</code> ~ Open link under cursor</li>
+<li><code>gf</code> ~ Open file under cursor</li>
+<li>If <code>unnamedplus</code> is set, copying with system clipboard (<code>CTRL c</code>) won’t overwrite Vim’s yank buffer.</li>
+</ul>
+<h2 id="miscellaneous">Miscellaneous</h2>
+<ul>
+<li><code>CTRL g</code> ~ Show filename and line count</li>
+<li><code>zz</code>, <code>zt</code>, <code>zb</code> ~ Center cursor on screen (middle, top, bottom)</li>
+<li><code>:center</code> ~ Center text</li>
+<li><code>ga</code> ~ Show character info under cursor</li>
+<li><code>g?</code> ~ ROT13 encode input</li>
+<li><code>CTRL a</code> / <code>CTRL x</code> ~ Increment/decrement number under cursor</li>
+<li><code>:sort u</code> ~ Sort lines uniquely</li>
+<li><code>:sort n</code> ~ Sort numerically</li>
+<li><code>&lt;C-f&gt;</code> ~ Edit Ex command in a full-page view</li>
+<li><code>_</code> instead of <code>^</code> ~ <code>_</code> moves to the first character on a line but also accepts a motion</li>
+</ul>
+
+    </main>
+
+  </body>
+</html>
