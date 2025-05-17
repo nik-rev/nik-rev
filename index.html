@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="My personal blog"
+    />
+    <title>
+      
+        Nik Revenco 🦀
+      
+    </title>
+
+    
+      <link
+        rel="stylesheet"
+        href="https://nikrev.com/style.css?h=a9325f829ee5869969f3"
+      />
+    
+  </head>
+  <style>
+    .posts__year, .posts {
+      list-style-type: none;
+    }
+
+    .posts {
+      padding-left: 0;
+      .posts__title {
+        margin-bottom: 3rem;
+      }
+      .posts__year {
+        padding: 0;
+        width: 100%;
+      }
+      .post {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+        font-size: 1.4rem;
+        .post__date {
+          margin: 0;
+          color: var(--secondary);
+        }
+        .post__link {
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    @media (width >= 600px) {
+      .posts .post {
+        display: grid;
+        grid-template-columns: 5rem 1fr;
+        column-gap: 6.0rem;
+        margin-bottom: 2rem;
+        width: full;
+        .post__date {
+          width: max-content;
+          align-content: center;
+        }
+      }
+    }
+  </style>
+  <body>
+    
+      <header class="space">
+        <h1>Nik Revenco 🦀</h1>
+        
+
+        
+          <nav class="header-links">
+            
+              <a href="https:&#x2F;&#x2F;github.com&#x2F;nik-rev">GitHub</a>
+            
+              <a href="https:&#x2F;&#x2F;linkedin.com">LinkedIn</a>
+            
+            
+          </nav>
+        
+      </header>
+    
+
+    
+      
+      <main>
+        <div class="space">
+          <p>I love open source software and programming in Rust :)</p>
+<p>Favorite things I've built:</p>
+<ul>
+<li><a href="https://ferrishot.com">ferrishot</a>, a powerful cross-platform screenshot app<a href="https://github.com/nik-rev/ferrishot"><img src="https://img.shields.io/github/stars/nik-rev/ferrishot" alt="ferrishot GitHub Repo stars" /></a></li>
+</ul>
+<p>Open source contributions I am most proud of:</p>
+<ul>
+<li>Helix
+<ul>
+<li><a href="https://github.com/helix-editor/helix/pull/13133">Inline git blame</a></li>
+<li><a href="https://github.com/helix-editor/helix/pull/12308">Color swatches</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        <ul class="posts">
+          
+            <h2 class="posts__title">Posts in 2025</h2>
+            <ul class="posts__year">
+              
+                <li class="post">
+                  <p class="post__date">16 May</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;a-cursed-way-to-combine-module-paths-in-rust-declarative-macros&#x2F;" class="post__link">A cursed way to combine module paths in Rust&#x27;s declarative macros</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">7 May</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;rust-setter-updater&#x2F;" class="post__link">Fun with traits, generics and complex types in Rust: Pass either a new value or compute the new value from a closure to a method</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">13 Apr</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;iced-functional-ui&#x2F;" class="post__link">Iced sets an example of a Rust UI library. It got me onboard in writing UIs in a functional, pure style. Here&#x27;s why</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">2 Apr</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;dev-env-in-rust&#x2F;" class="post__link">My Dev environment is fully written in Rust!</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">1 Apr</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;what-will-rust-keywords-do&#x2F;" class="post__link">What will these reserved Rust keywords do? Theory and speculation</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">29 Mar</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;format-macro-slow-string-concat&#x2F;" class="post__link">Rust&#x27;s format! macro is slow for simple string concatenation. But why?</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">27 Feb</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;lit-str-concat-macro&#x2F;" class="post__link">Rust&#x27;s std macros like include_str! and env! have a superpower, and how can we achieve it?</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">25 Feb</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;typescript-type-system-vs-rust&#x2F;" class="post__link">I thought TypeScript&#x27;s type system was powerful. Until I tried Rust.</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">30 Jan</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;trying-out-nushell&#x2F;" class="post__link">I switched from Zsh to Nushell. It&#x27;s a beautiful shell, I&#x27;m never going back!</a>
+                </li>
+              
+            </ul>
+          
+            <h2 class="posts__title">Posts in 2024</h2>
+            <ul class="posts__year">
+              
+                <li class="post">
+                  <p class="post__date">4 Oct</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;switched-to-helix&#x2F;" class="post__link">I gave Helix a try and now I can&#x27;t see myself using any other text editor</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">2 Oct</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;switched-to-nixos&#x2F;" class="post__link">I switched to NixOS from Arch Linux and I&#x27;m never going back</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">22 Sep</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;everything-is-a-file&#x2F;" class="post__link">Quest to understand the idea of &quot;Everything is a file&quot;</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">11 Sep</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;useful-neovim-tricks&#x2F;" class="post__link">Neovim tips and life hacks that significantly improved my productivity</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">2 Sep</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;arch-install&#x2F;" class="post__link">How I install Arch Linux with full disk encryption</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">21 Aug</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;linux-first-time&#x2F;" class="post__link">I was forced to use Linux. But now I love it.</a>
+                </li>
+              
+                <li class="post">
+                  <p class="post__date">17 Apr</p>
+                  <a href="https:&#x2F;&#x2F;nikrev.com&#x2F;blog&#x2F;obscure-semantic-html&#x2F;" class="post__link">What you might not know about Semantic Blockquotes in HTML</a>
+                </li>
+              
+            </ul>
+          
+        </ul>
+      </main>
+    
+  </body>
+</html>

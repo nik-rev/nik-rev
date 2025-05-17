@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="
+  My personal blog
+"
+    />
+    <title>
+      
+  Nik Revenco 🦀 | I switched from Zsh to Nushell. It&#x27;s a beautiful shell, I&#x27;m never going back!
+
+    </title>
+
+    
+      <link
+        rel="stylesheet"
+        href="https://nikrev.com/style.css?h=a9325f829ee5869969f3"
+      />
+    
+  </head>
+  <style>
+    .posts__year, .posts {
+      list-style-type: none;
+    }
+
+    .posts {
+      padding-left: 0;
+      .posts__title {
+        margin-bottom: 3rem;
+      }
+      .posts__year {
+        padding: 0;
+        width: 100%;
+      }
+      .post {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+        font-size: 1.4rem;
+        .post__date {
+          margin: 0;
+          color: var(--secondary);
+        }
+        .post__link {
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    @media (width >= 600px) {
+      .posts .post {
+        display: grid;
+        grid-template-columns: 5rem 1fr;
+        column-gap: 6.0rem;
+        margin-bottom: 2rem;
+        width: full;
+        .post__date {
+          width: max-content;
+          align-content: center;
+        }
+      }
+    }
+  </style>
+  <body>
+    
+  <header class="space">
+    <style>
+      .home-arrow {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    </style>
+    <a href="https:&#x2F;&#x2F;nikrev.com" class="home-arrow">&LeftArrow; home</a>
+  </header>
+
+
+    
+    <main>
+      <h1>I switched from Zsh to Nushell. It&#x27;s a beautiful shell, I&#x27;m never going back!</h1>
+      
+        <p class="secondary">
+          30 January, 2025
+        </p>
+      
+      <div class="space"></div>
+      <p>I switched from zsh to nushell. It is so good <em>wow</em>, I've been using it for a couple months as an interactive shell but recently just started writing scripts with it. I'm wondering why I didn't do it sooner!</p>
+<ol>
+<li>No need to memorize flags for commands anymore. I dont need a <code>--reverse</code> for every command. Instead, if I want to reverse something I just pipe my data with <code>| reverse</code>. Instead of memorizing N flags for M commands, memorize N commands and compose with any command. Elegant.</li>
+<li>Every nushell command reads like plain english. Sometimes I forget I'm even talking to a computer. "What's the largest file in the current directory?" = <code>ls | sort-by size | reverse | first</code> = List all files, sort them by size from largest to smallest, then take the first file.</li>
+<li>No more <code>sed</code> and <code>awk</code>. Nushell's string manipulation is a pleasure to work with. The <code>str</code> command can even convert text between snake_case, PascalCase, camelCase etc.</li>
+<li>Data manipulation on steroids. It works on so many file formats, with dozens of utility functions to get output of data.</li>
+<li>Each function does one thing and does it well. Wait, isn't this Unix's philosophy? Yes, Nushell feels like what we should have had from the beginning. It feels a lot "more UNIX" than bash or zsh</li>
+<li>it ships with its own tools. no need to worry about stuff like <code>curl</code> not being available. you always have <code>http get</code> if you can execute the script</li>
+<li>Performance. It feels a lot snappier than zsh.</li>
+<li>The scripting language is just expressive, beautiful and so much easier to read and write than bash is.</li>
+<li>It's cross platform!! Huge deal for people who need to use their shell on Windows.</li>
+<li>Beautiful help pages. Everything is colored with usage examples for each command.</li>
+</ol>
+<p>More people should be using nushell! In my opinion it is really underrated and I encourage you to give it a go</p>
+
+    </main>
+
+  </body>
+</html>
