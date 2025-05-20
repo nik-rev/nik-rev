@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="
+  My personal blog
+"
+    />
+    <title>
+      
+  Nik Revenco 🦀 | Iced sets an example of a Rust UI library. It got me onboard in writing UIs in a functional, pure style. Here&#x27;s why
+
+    </title>
+
+    
+      <link
+        rel="stylesheet"
+        href="https://nikrev.com/style.css?h=f27d6bdd1624b1baa156"
+      />
+    
+  </head>
+  <style>
+    .posts__year, .posts {
+      list-style-type: none;
+    }
+
+    .posts {
+      padding-left: 0;
+      .posts__title {
+        margin-bottom: 3rem;
+      }
+      .posts__year {
+        padding: 0;
+        width: 100%;
+      }
+      .post {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+        font-size: 1.4rem;
+        .post__date {
+          margin: 0;
+          color: var(--secondary);
+        }
+        .post__link {
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    @media (width >= 600px) {
+      .posts .post {
+        display: grid;
+        grid-template-columns: 5rem 1fr;
+        column-gap: 6.0rem;
+        margin-bottom: 4rem;
+        width: full;
+        .post__date {
+          width: max-content;
+          align-content: center;
+        }
+      }
+    }
+    .header-links {
+      display: flex;
+      gap: 0.5em;
+    }
+  </style>
+  <body>
+    
+  <header class="space">
+    <style>
+      .home-arrow {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    </style>
+    <a href="https:&#x2F;&#x2F;nikrev.com" class="home-arrow">&LeftArrow; home</a>
+  </header>
+
+
+    
+    <main>
+      <h1 class="title">Iced sets an example of a Rust UI library. It got me onboard in writing UIs in a functional, pure style. Here’s why
+</h1>
+      
+        <p class="secondary">
+          13 April, 2025
+        </p>
+      
+      <div class="space"></div>
+      <p>I’m using <a href="https://github.com/iced-rs/iced"><code>iced</code></a>, a native UI library for Rust <em>inspired</em> by Elm architecture (which is a purely functional way of doing UI) for my app <a href="https://github.com/nik-rev/ferrishot"><code>ferrishot</code></a> (a desktop screenshot app inspired by flameshot)</p>
+<p>I recently came across a PR by the maintainer of iced which introduces <a href="https://github.com/iced-rs/iced/pull/2910">“Time Travel Debugging”</a>.</p>
+<p>Essentially, in iced there is <strong>only 1 enum</strong>, a <code>Message</code> which is responsible for mutating your application state. There is only <strong>1 place</strong> which receives this <code>Message</code>, the <code>update</code> method of your app. No other place can <em>ever</em> access <code>&amp;mut App</code>.</p>
+<p>This way of doing UI makes it highly effective to reason about your app. Because only <code>Message</code> can mutate the state, if you assemble all of the <code>Message</code>s you receives throughout 1 instance of the app into a <code>Vec&lt;(Instant, Message)&gt;</code>, (where <code>Instant</code> is when the <code>Message</code> happened).</p>
+<p>You have a complete 4-dimensional control over your app. You are able to go to any point of its existence. And view the entire state of the app. Rewind, go back into the future etc. It’s crazy powerful!</p>
+<p>This great power comes at a little cost. To properly work, the <code>update</code> method (which receives <code>Message</code> and <code>&amp;mut App</code>) <strong>must be pure</strong>. It should not do any IO, like reading from a file. Instead, iced has a <code>Task</code> structure which the <code>update</code> method returns. Signature:</p>
+<pre data-lang="rs" class="language-rs z-code"><code class="language-rs" data-lang="rs"><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">update</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> App, Message</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> Task
+</span></span></span></code></pre>
+<p>Inside of this <code>Task</code> you are free to do whatever IO you want. But it <strong>must not</strong> happen directly inside of the <code>update</code>. Lets say your app wants to read from a file and store the contents.</p>
+<p>This is the impure way to achieve that by directly reading in the <code>update</code> method:</p>
+<pre data-lang="rs" class="language-rs z-code"><code class="language-rs" data-lang="rs"><span class="z-source z-rust"><span class="z-meta z-struct z-rust"><span class="z-storage z-type z-struct z-rust">struct</span> </span><span class="z-meta z-struct z-rust"><span class="z-entity z-name z-struct z-rust">App</span> </span><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust">    <span class="z-variable z-other z-member z-rust">file_contents</span><span class="z-punctuation z-separator z-type z-rust">:</span> String
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-source z-rust">
+</span><span class="z-source z-rust"><span class="z-meta z-enum z-rust"><span class="z-storage z-type z-enum z-rust">enum</span> <span class="z-entity z-name z-enum z-rust">Message</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-enum z-rust"><span class="z-meta z-block z-rust">    ReadFromFile<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>PathBuf</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-enum z-rust"><span class="z-meta z-block z-rust"></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-source z-rust">
+</span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">update</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">app</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> App, <span class="z-variable z-parameter z-rust">message</span><span class="z-punctuation z-separator z-rust">:</span> Message</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> Task</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust">    <span class="z-keyword z-control z-rust">match</span> message <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">        <span class="z-meta z-path z-rust">Message<span class="z-punctuation z-accessor z-rust">::</span></span>ReadFromFile<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>file</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">            <span class="z-storage z-type z-rust">let</span> contents <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">fs<span class="z-punctuation z-accessor z-rust">::</span></span>read_to_string<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>file</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">            app<span class="z-punctuation z-accessor z-dot z-rust">.</span>file_contents <span class="z-keyword z-operator z-assignment z-rust">=</span> contents<span class="z-punctuation z-terminator z-rust">;</span>
+</span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust">    <span class="z-meta z-path z-rust">Task<span class="z-punctuation z-accessor z-rust">::</span></span>none<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>With the above, time-travelling will not work properly. Because when you re-play the sent <code>Message</code>, it will read from the file again. Who’s contents could have changed in-between reads</p>
+<p>By moving the impure IO stuff into a <code>Task</code>, we fix the above problem:</p>
+<pre data-lang="rs" class="language-rs z-code"><code class="language-rs" data-lang="rs"><span class="z-source z-rust"><span class="z-meta z-struct z-rust"><span class="z-storage z-type z-struct z-rust">struct</span> </span><span class="z-meta z-struct z-rust"><span class="z-entity z-name z-struct z-rust">App</span> </span><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust">    <span class="z-variable z-other z-member z-rust">file_contents</span><span class="z-punctuation z-separator z-type z-rust">:</span> String
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-struct z-rust"><span class="z-meta z-block z-rust"></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-source z-rust">
+</span><span class="z-source z-rust"><span class="z-meta z-enum z-rust"><span class="z-storage z-type z-enum z-rust">enum</span> <span class="z-entity z-name z-enum z-rust">Message</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-enum z-rust"><span class="z-meta z-block z-rust">    ReadFromFile<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>PathBuf</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-separator z-rust">,</span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-enum z-rust"><span class="z-meta z-block z-rust">    UpdateFileContents<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span><span class="z-support z-type z-rust">String</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-enum z-rust"><span class="z-meta z-block z-rust"></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span><span class="z-source z-rust">
+</span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-function z-rust"><span class="z-storage z-type z-function z-rust">fn</span> </span><span class="z-entity z-name z-function z-rust">update</span></span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-begin z-rust">(</span><span class="z-variable z-parameter z-rust">app</span><span class="z-punctuation z-separator z-rust">:</span> <span class="z-keyword z-operator z-rust">&amp;</span><span class="z-storage z-modifier z-rust">mut</span> App, <span class="z-variable z-parameter z-rust">message</span><span class="z-punctuation z-separator z-rust">:</span> Message</span><span class="z-meta z-function z-rust"><span class="z-meta z-function z-parameters z-rust"><span class="z-punctuation z-section z-parameters z-end z-rust">)</span></span></span></span><span class="z-meta z-function z-rust"> <span class="z-meta z-function z-return-type z-rust"><span class="z-punctuation z-separator z-rust">-&gt;</span> Task</span> </span><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust">    <span class="z-keyword z-control z-rust">match</span> message <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">        <span class="z-meta z-path z-rust">Message<span class="z-punctuation z-accessor z-rust">::</span></span>ReadFromFile<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>file</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">            <span class="z-meta z-path z-rust">Task<span class="z-punctuation z-accessor z-rust">::</span></span>future<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>async <span class="z-storage z-modifier z-rust">move</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-group z-rust"><span class="z-meta z-block z-rust">                <span class="z-storage z-type z-rust">let</span> contents <span class="z-keyword z-operator z-assignment z-rust">=</span> <span class="z-meta z-path z-rust">fs<span class="z-punctuation z-accessor z-rust">::</span></span>read_to_string<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>file</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span><span class="z-punctuation z-terminator z-rust">;</span>
+</span></span></span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-group z-rust"><span class="z-meta z-block z-rust">
+</span></span></span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-group z-rust"><span class="z-meta z-block z-rust">                <span class="z-comment z-line z-double-slash z-rust"><span class="z-punctuation z-definition z-comment z-rust">//</span> below message will be sent to the `update`
+</span></span></span></span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-group z-rust"><span class="z-meta z-block z-rust">                <span class="z-meta z-path z-rust">Message<span class="z-punctuation z-accessor z-rust">::</span></span>UpdateFileContents<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>contents</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+</span></span></span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-group z-rust"><span class="z-meta z-block z-rust">            </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+</span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">
+</span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">        <span class="z-meta z-path z-rust">Message<span class="z-punctuation z-accessor z-rust">::</span></span>UpdateFileContents<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span>contents</span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span> <span class="z-keyword z-operator z-rust">=&gt;</span> <span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-begin z-rust">{</span>
+</span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">            app<span class="z-punctuation z-accessor z-dot z-rust">.</span>file_contents <span class="z-keyword z-operator z-assignment z-rust">=</span> contents<span class="z-punctuation z-terminator z-rust">;</span>
+</span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">            <span class="z-meta z-path z-rust">Task<span class="z-punctuation z-accessor z-rust">::</span></span>none<span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-begin z-rust">(</span></span><span class="z-meta z-group z-rust"><span class="z-punctuation z-section z-group z-end z-rust">)</span></span>
+</span></span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">        </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"><span class="z-meta z-block z-rust">    </span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span>
+</span></span></span><span class="z-source z-rust"><span class="z-meta z-function z-rust"><span class="z-meta z-block z-rust"></span><span class="z-meta z-block z-rust"><span class="z-punctuation z-section z-block z-end z-rust">}</span></span></span>
+</span></code></pre>
+<p>Here, our timeline will include 2 <code>Message</code>s. Even if the contents of the file changes, the <code>Message</code> will not and we can now safely time-travel.</p>
+
+    </main>
+
+  </body>
+</html>

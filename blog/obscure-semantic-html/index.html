@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="
+  My personal blog
+"
+    />
+    <title>
+      
+  Nik Revenco 🦀 | What you might not know about Semantic Blockquotes in HTML
+
+    </title>
+
+    
+      <link
+        rel="stylesheet"
+        href="https://nikrev.com/style.css?h=f27d6bdd1624b1baa156"
+      />
+    
+  </head>
+  <style>
+    .posts__year, .posts {
+      list-style-type: none;
+    }
+
+    .posts {
+      padding-left: 0;
+      .posts__title {
+        margin-bottom: 3rem;
+      }
+      .posts__year {
+        padding: 0;
+        width: 100%;
+      }
+      .post {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+        font-size: 1.4rem;
+        .post__date {
+          margin: 0;
+          color: var(--secondary);
+        }
+        .post__link {
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    @media (width >= 600px) {
+      .posts .post {
+        display: grid;
+        grid-template-columns: 5rem 1fr;
+        column-gap: 6.0rem;
+        margin-bottom: 4rem;
+        width: full;
+        .post__date {
+          width: max-content;
+          align-content: center;
+        }
+      }
+    }
+    .header-links {
+      display: flex;
+      gap: 0.5em;
+    }
+  </style>
+  <body>
+    
+  <header class="space">
+    <style>
+      .home-arrow {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    </style>
+    <a href="https:&#x2F;&#x2F;nikrev.com" class="home-arrow">&LeftArrow; home</a>
+  </header>
+
+
+    
+    <main>
+      <h1 class="title">What you might not know about Semantic Blockquotes in HTML
+</h1>
+      
+        <p class="secondary">
+          17 April, 2024
+        </p>
+      
+      <div class="space"></div>
+      <p>I think most people know the basics about semantic HTML, where you use certain HTML elements to describe the structure of your page in order to make it more accessible for screen readers.</p>
+<p>But not all semantic HTML is straightforward. Specifically, how do you represent a quote by someone and give them credit for it in a semantic way?</p>
+<span id="continue-reading"></span>
+<p>To understand, first let’s talk about semantic HTML. An example below, instead of a “soup of divs” as follows:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span> <span class="z-meta z-attribute-with-value z-class z-html"><span class="z-entity z-other z-attribute-name z-class z-html">class</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span></span><span class="z-string z-quoted z-double z-html"><span class="z-meta z-class-name z-html">content</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span> <span class="z-meta z-attribute-with-value z-class z-html"><span class="z-entity z-other z-attribute-name z-class z-html">class</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span></span><span class="z-string z-quoted z-double z-html"><span class="z-meta z-class-name z-html">header</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span> /<span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span> <span class="z-meta z-attribute-with-value z-class z-html"><span class="z-entity z-other z-attribute-name z-class z-html">class</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span></span><span class="z-string z-quoted z-double z-html"><span class="z-meta z-class-name z-html">button</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span> /<span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span> <span class="z-meta z-attribute-with-value z-class z-html"><span class="z-entity z-other z-attribute-name z-class z-html">class</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span></span><span class="z-string z-quoted z-double z-html"><span class="z-meta z-class-name z-html">footer</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span> /<span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></code></pre>
+<p>It’s better to use HTML elements designed specifically to describe the meaning of the page semantically:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-other z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span></span><span class="z-meta z-tag z-other z-html"><span class="z-entity z-name z-tag z-other z-html">main</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">header</span> /<span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-inline z-form z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-inline z-form z-html">button</span> <span class="z-punctuation z-definition z-tag z-end z-html">/&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">footer</span> /<span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic"><span class="z-meta z-tag z-other z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span></span><span class="z-meta z-tag z-other z-html"><span class="z-entity z-name z-tag z-other z-html">main</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></code></pre>
+<p>Semantic HTML is extremely important for websites due to two main factors:</p>
+<ul>
+<li>
+<p>Accessibility</p>
+<p>Screen readers understand the context of the page by reading HTML elements, not tags or class names.</p>
+</li>
+<li>
+<p>Search Engine Optimization (SEO)</p>
+<p>Bots such as Google crawler use HTML to understand the structure of a page.</p>
+</li>
+</ul>
+<p>But there are some semantic HTML patterns that aren’t as obvious. For instance, if you want to cite the original author when using <code>blockquote</code>.</p>
+<h2 id="properly-representing-blockquotes-with-a-caption"><a class="zola-anchor" href="#properly-representing-blockquotes-with-a-caption" aria-label="Anchor link for: properly-representing-blockquotes-with-a-caption">Properly representing blockquotes with a caption</a></h2>
+<p>To quote, you can use the <code>blockquote</code> element:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  We cannot solve our problems with the same thinking we used when we created
+</span><span class="z-text z-html z-basic">  them.
+</span><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></code></pre>
+<h3 id="cite-element"><a class="zola-anchor" href="#cite-element" aria-label="Anchor link for: cite-element"><code>cite</code> element</a></h3>
+<p>But what if you wanted to give credit to the original author? You might try something like this:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  We cannot solve our problems with the same thinking we used when we created
+</span><span class="z-text z-html z-basic">  them.
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-inline z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-inline z-any z-html">cite</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span> Albert Einstein <span class="z-meta z-tag z-inline z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-inline z-any z-html">cite</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></code></pre>
+<p>But the above approach is semantically incorrect. There are two problems with it:</p>
+<ol>
+<li>
+<p>A <code>cite</code> element <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/cite#usage_notes">should refer to <em>work</em> and not <em>people</em></a>.</p>
+<p>For example, we could put the link to a social media post or an article in a <code>cite</code> element. But not an individual person.</p>
+</li>
+<li>
+<p>Putting a <code>cite</code> element within a <code>blockquote</code> is <a href="https://www.w3.org/TR/html5-author/the-blockquote-element.html#the-blockquote-element">forbidden by the HTML spec</a>, due to the fact that it would make the citation a part of the quote.</p>
+</li>
+</ol>
+<h3 id="parent-element"><a class="zola-anchor" href="#parent-element" aria-label="Anchor link for: parent-element"><code>parent</code> element</a></h3>
+<p>An alternative idea would be to use a <code>div</code> to group the quote and the citation together:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">    <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">      We cannot solve our problems with the same thinking we used when we
+</span><span class="z-text z-html z-basic">      created them.
+</span><span class="z-text z-html z-basic">    <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>Albert Einstein<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></code></pre>
+<p>But again, this can be used to help style those two elements, but semantically it doesn’t join them together. To a screen reader they would appear as two distinct, unrelated elements.</p>
+<h4 id="figure-element"><a class="zola-anchor" href="#figure-element" aria-label="Anchor link for: figure-element"><code>figure</code> element</a></h4>
+<p>Finally, after researching I stumbled across a new solution, using the <code>figure</code> element:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">figure</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">    <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">      We cannot solve our problems with the same thinking we used when we
+</span><span class="z-text z-html z-basic">      created them.
+</span><span class="z-text z-html z-basic">    <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">figcaption</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">    <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>Albert Einstein<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">figcaption</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">figure</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></code></pre>
+<p>This way, we are properly describing the relationship between the <code>blockquote</code> and the <code>figcaption</code>.</p>
+<h2 id="a-plugin-that-adds-a-new-syntax-to-markdown-to-represent-blockquotes-semantically"><a class="zola-anchor" href="#a-plugin-that-adds-a-new-syntax-to-markdown-to-represent-blockquotes-semantically" aria-label="Anchor link for: a-plugin-that-adds-a-new-syntax-to-markdown-to-represent-blockquotes-semantically">A plugin that adds a new syntax to Markdown to represent blockquotes semantically</a></h2>
+<p>I wanted to be able to create such blockquotes and figcaptions on-the-fly, in markdown. There wasn’t a solution available, so I wrote a plugin in order to accomplish this.</p>
+<p><a href="https://github.com/rehypejs/rehype">Rehype</a> is a parser for HTML and is commonly used with MDX and <a href="https://github.com/remarkjs/remark">remark</a> – a parser for markdown. Together, these tools allow you to get very creative with your markdown editing.</p>
+<p>My plugin is called <a href="https://github.com/nik-rev/rehype-semantic-blockquotes"><code>rehype-semantic-blockquotes</code></a>, and it transforms markdown syntax such as this:</p>
+<pre data-lang="md" class="language-md z-code"><code class="language-md" data-lang="md"><span class="z-text z-html z-markdown"><span class="z-meta z-block-level z-markdown"><span class="z-markup z-quote z-markdown"><span class="z-punctuation z-definition z-blockquote z-markdown">&gt;</span> We cannot solve our problems with the same thinking we used when we created them.
+</span></span></span><span class="z-text z-html z-markdown"><span class="z-meta z-block-level z-markdown"><span class="z-markup z-quote z-markdown"></span><span class="z-markup z-quote z-markdown"><span class="z-punctuation z-definition z-blockquote z-markdown">&gt;</span>
+</span></span></span><span class="z-text z-html z-markdown"><span class="z-meta z-block-level z-markdown"><span class="z-markup z-quote z-markdown"></span><span class="z-markup z-quote z-markdown"><span class="z-punctuation z-definition z-blockquote z-markdown">&gt;</span> @ Albert Einstein
+</span></span></span></code></pre>
+<p>Into the following HTML:</p>
+<pre data-lang="md" class="language-md z-code"><code class="language-md" data-lang="md"><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">figure</span> <span class="z-meta z-attribute-with-value z-html"><span class="z-entity z-other z-attribute-name z-html">data-blockquote-container</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span> <span class="z-meta z-attribute-with-value z-html"><span class="z-entity z-other z-attribute-name z-html">data-blockquote-content</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown">    <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown">      We cannot solve our problems with the same thinking we used when we created
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown">    them.
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown">    <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">blockquote</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">figcaption</span> <span class="z-meta z-attribute-with-value z-html"><span class="z-entity z-other z-attribute-name z-html">data-blockquote-credit</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown">    <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>Albert Einstein<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown">  <span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">figcaption</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span><span class="z-text z-html z-markdown"><span class="z-meta z-disable-markdown"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">figure</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span></code></pre>
+<p>The <code>@</code> syntax is added by the plugin. It makes it easy to author accessible content in markdown.</p>
+<p>You can find more information about how to use this on <a href="https://github.com/nikitarevenco/rehype-semantic-blockquotes"><code>rehype-semantic-blockquotes</code></a> plugin README!</p>
+
+    </main>
+
+  </body>
+</html>
