@@ -12,6 +12,16 @@ fn you_guessed_it() -> impl Debug {
 }
 ```
 
+# Projects
+
+## ferrishot [![github](https://img.shields.io/github/stars/nik-rev/ferrishot)](https://github.com/nik-rev/ferrishot)
+
+It's a screenshot app written in Rust!
+
+## patchy [![github](https://img.shields.io/github/stars/nik-rev/patchy)](https://github.com/nik-rev/patchy)
+
+If you're the type who maintains personal forks where you just merge PRs you like, then you might want this
+
 # 📦 Crates
 
 My contributions to the Rust ecosystem.
