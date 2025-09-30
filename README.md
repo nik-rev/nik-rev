@@ -24,7 +24,7 @@ It's a screenshot app written in Rust!
 
 ## patchy [![github](https://img.shields.io/github/stars/nik-rev/patchy)](https://github.com/nik-rev/patchy)
 
-If you're the type who maintains personal forks where you just merge PRs you like, then you might want this
+If you fork a project just to merge PRs you like, you might find `patchy` useful
 
 ## dots [![github](https://img.shields.io/github/stars/nik-rev/dots)](https://github.com/nik-rev/dots)
 
