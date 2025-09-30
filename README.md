@@ -12,7 +12,7 @@ fn you_guessed_it() -> impl Debug {
 }
 ```
 
-# Projects
+# ⚒️ Projects
 
 ## countryfetch [![github](https://img.shields.io/github/stars/nik-rev/countryfetch)](https://github.com/nik-rev/countryfetch)
 
