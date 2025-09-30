@@ -1,4 +1,4 @@
-My favorite programming language is:
+Hi! My favorite programming language is:
 
 ```rust
 fn you_guessed_it() -> impl Debug {
