@@ -14,6 +14,10 @@ fn you_guessed_it() -> impl Debug {
 
 # Projects
 
+## countryfetch [![github](https://img.shields.io/github/stars/nik-rev/countryfetch)](https://github.com/nik-rev/countryfetch)
+
+Like Neofetch but for your country
+
 ## ferrishot [![github](https://img.shields.io/github/stars/nik-rev/ferrishot)](https://github.com/nik-rev/ferrishot)
 
 It's a screenshot app written in Rust!
@@ -21,6 +25,10 @@ It's a screenshot app written in Rust!
 ## patchy [![github](https://img.shields.io/github/stars/nik-rev/patchy)](https://github.com/nik-rev/patchy)
 
 If you're the type who maintains personal forks where you just merge PRs you like, then you might want this
+
+## dots [![github](https://img.shields.io/github/stars/nik-rev/dots)](https://github.com/nik-rev/dots)
+
+Incredibly simple dotfiles manager
 
 # 📦 Crates
 
@@ -98,6 +106,11 @@ use simply_colored::*;
 
 println!("{BLUE}{BOLD}Simply colored!")
 ```
+
+## Other crates
+
+- `commented` for commenting line in an unknown file type [![github](https://img.shields.io/github/stars/nik-rev/commented)](https://github.com/nik-rev/commented)
+- `wrapping-in-range` lets you have stuff like`.wrapping_sub` but for an integer in a custom range like `1..=100` [![github](https://img.shields.io/github/stars/nik-rev/wrapping-in-range)](https://github.com/nik-rev/wrapping-in-range)
 
 <!-- Hi, I love programming in Rust! I use Helix and [contribute](https://github.com/helix-editor/helix/pulls?q=is%3Apr%20sort%3Areactions-%2B1-desc%20author%3Anik-rev%20) to it. -->
 
