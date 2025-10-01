@@ -109,6 +109,7 @@ println!("{BLUE}{BOLD}Simply colored!")
 
 ## Other crates
 
+- `collection-macro` which provides the general-purpose `seq![]` and `map! {}` macros for creating collections [![github](https://img.shields.io/github/stars/nik-rev/collection-macro)](https://github.com/nik-rev/collection-macro/tree/main)
 - `commented` for commenting line in an unknown file type [![github](https://img.shields.io/github/stars/nik-rev/commented)](https://github.com/nik-rev/commented)
 - `wrapping-in-range` lets you have stuff like`.wrapping_sub` but for an integer in a custom range like `1..=100` [![github](https://img.shields.io/github/stars/nik-rev/wrapping-in-range)](https://github.com/nik-rev/wrapping-in-range)
 
