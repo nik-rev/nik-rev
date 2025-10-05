@@ -16,8 +16,6 @@ fn you_guessed_it() -> impl Debug {
 
 My contributions to the Rust ecosystem.
 
-Fully custom, can be whatever you want. Like `10nzusize` which produces `NonZeroUsize` and compile errors if it is `0`.
-
 ## `derive_aliases` [![github](https://img.shields.io/github/stars/nik-rev/derive-aliases)](https://github.com/nik-rev/derive-aliases)
 
 Custom `#[derive]` aliases. Write this:
@@ -95,6 +93,8 @@ fn main() {
     );
 }
 ```
+
+Fully custom, can be whatever you want. Like `10nzusize` which produces `NonZeroUsize` and compile errors if it is `0`.
 
 ## `simply_colored` [![github](https://img.shields.io/github/stars/nik-rev/culit)](https://github.com/nik-rev/culit)
 
