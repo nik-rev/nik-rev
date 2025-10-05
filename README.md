@@ -12,44 +12,9 @@ fn you_guessed_it() -> impl Debug {
 }
 ```
 
-# ⚒️ Projects
-
-## countryfetch [![github](https://img.shields.io/github/stars/nik-rev/countryfetch)](https://github.com/nik-rev/countryfetch)
-
-Like Neofetch but for your country
-
-## ferrishot [![github](https://img.shields.io/github/stars/nik-rev/ferrishot)](https://github.com/nik-rev/ferrishot)
-
-It's a screenshot app written in Rust!
-
-## patchy [![github](https://img.shields.io/github/stars/nik-rev/patchy)](https://github.com/nik-rev/patchy)
-
-If you fork a project just to merge PRs you like, you might find `patchy` useful
-
-## dots [![github](https://img.shields.io/github/stars/nik-rev/dots)](https://github.com/nik-rev/dots)
-
-Incredibly simple dotfiles manager
-
 # 📦 Crates
 
 My contributions to the Rust ecosystem.
-
-## `culit` [![github](https://img.shields.io/github/stars/nik-rev/culit)](https://github.com/nik-rev/culit)
-
-Lets you define custom literals. Like literals for `Duration`:
-
-```rust
-#[culit]
-fn main() {
-    assert_eq!(
-        100d + 11h + 8m + 7s,
-        Duration::from_secs(100 * 60 * 60 * 24)
-        + Duration::from_secs(11 * 60 * 60)
-        + Duration::from_secs(8 * 60)
-        + Duration::from_secs(7)
-    );
-}
-```
 
 Fully custom, can be whatever you want. Like `10nzusize` which produces `NonZeroUsize` and compile errors if it is `0`.
 
@@ -71,6 +36,23 @@ which expands to this:
 //             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //             expanded
 struct User;
+```
+
+## `displaystr` [![github](https://img.shields.io/github/stars/nik-rev/displaystr)](https://github.com/nik-rev/displaystr)
+
+A completely novel way to implement the `Display` trait
+
+```rust
+#[display]
+pub enum DataStoreError {
+    Disconnect(std::io::Error) = "data store disconnected",
+    Redaction(String) = "the data for key `{_0}` is not available",
+    InvalidHeader {
+        expected: String,
+        found: String,
+    } = "invalid header (expected {expected:?}, found {found:?})",
+    Unknown = "unknown data store error",
+}
 ```
 
 ## `docstr` [![github](https://img.shields.io/github/stars/nik-rev/docstr)](https://github.com/nik-rev/docstr)
@@ -97,6 +79,23 @@ int main(int argc, char **argv) {
 }"#)
 ```
 
+## `culit` [![github](https://img.shields.io/github/stars/nik-rev/culit)](https://github.com/nik-rev/culit)
+
+Lets you define custom literals. Like literals for `Duration`:
+
+```rust
+#[culit]
+fn main() {
+    assert_eq!(
+        100d + 11h + 8m + 7s,
+        Duration::from_secs(100 * 60 * 60 * 24)
+        + Duration::from_secs(11 * 60 * 60)
+        + Duration::from_secs(8 * 60)
+        + Duration::from_secs(7)
+    );
+}
+```
+
 ## `simply_colored` [![github](https://img.shields.io/github/stars/nik-rev/culit)](https://github.com/nik-rev/culit)
 
 Simplest crate in existence for terminal styles.
@@ -112,6 +111,24 @@ println!("{BLUE}{BOLD}Simply colored!")
 - `collection-macro` which provides the general-purpose `seq![]` and `map! {}` macros for creating collections [![github](https://img.shields.io/github/stars/nik-rev/collection-macro)](https://github.com/nik-rev/collection-macro/tree/main)
 - `commented` for commenting line in an unknown file type [![github](https://img.shields.io/github/stars/nik-rev/commented)](https://github.com/nik-rev/commented)
 - `wrapping-in-range` lets you have stuff like`.wrapping_sub` but for an integer in a custom range like `1..=100` [![github](https://img.shields.io/github/stars/nik-rev/wrapping-in-range)](https://github.com/nik-rev/wrapping-in-range)
+
+# ⚒️ Projects
+
+## countryfetch [![github](https://img.shields.io/github/stars/nik-rev/countryfetch)](https://github.com/nik-rev/countryfetch)
+
+Like Neofetch but for your country
+
+## ferrishot [![github](https://img.shields.io/github/stars/nik-rev/ferrishot)](https://github.com/nik-rev/ferrishot)
+
+It's a screenshot app written in Rust!
+
+## patchy [![github](https://img.shields.io/github/stars/nik-rev/patchy)](https://github.com/nik-rev/patchy)
+
+If you fork a project just to merge PRs you like, you might find `patchy` useful
+
+## dots [![github](https://img.shields.io/github/stars/nik-rev/dots)](https://github.com/nik-rev/dots)
+
+Incredibly simple dotfiles manager
 
 <!-- Hi, I love programming in Rust! I use Helix and [contribute](https://github.com/helix-editor/helix/pulls?q=is%3Apr%20sort%3Areactions-%2B1-desc%20author%3Anik-rev%20) to it. -->
 
