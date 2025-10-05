@@ -36,23 +36,6 @@ which expands to this:
 struct User;
 ```
 
-## `displaystr` [![github](https://img.shields.io/github/stars/nik-rev/displaystr)](https://github.com/nik-rev/displaystr)
-
-A completely novel way to implement the `Display` trait
-
-```rust
-#[display]
-pub enum DataStoreError {
-    Disconnect(std::io::Error) = "data store disconnected",
-    Redaction(String) = "the data for key `{_0}` is not available",
-    InvalidHeader {
-        expected: String,
-        found: String,
-    } = "invalid header (expected {expected:?}, found {found:?})",
-    Unknown = "unknown data store error",
-}
-```
-
 ## `docstr` [![github](https://img.shields.io/github/stars/nik-rev/docstr)](https://github.com/nik-rev/docstr)
 
 Ergonomic multi-line string literals, even composes with any macro like `format!`.
@@ -111,6 +94,7 @@ println!("{BLUE}{BOLD}Simply colored!")
 - `collection-macro` which provides the general-purpose `seq![]` and `map! {}` macros for creating collections [![github](https://img.shields.io/github/stars/nik-rev/collection-macro)](https://github.com/nik-rev/collection-macro/tree/main)
 - `commented` for commenting line in an unknown file type [![github](https://img.shields.io/github/stars/nik-rev/commented)](https://github.com/nik-rev/commented)
 - `wrapping-in-range` lets you have stuff like`.wrapping_sub` but for an integer in a custom range like `1..=100` [![github](https://img.shields.io/github/stars/nik-rev/wrapping-in-range)](https://github.com/nik-rev/wrapping-in-range)
+- `displaystr` provides a completely novel way to implement the `Display` trait [![github](https://img.shields.io/github/stars/nik-rev/displaystr)](https://github.com/nik-rev/displaystr)
 
 # ⚒️ Projects
 
