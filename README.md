@@ -77,7 +77,7 @@ fn main() {
 
 Fully custom, can be whatever you want. Like `10nzusize` which produces `NonZeroUsize` and compile errors if it is `0`.
 
-## `simply_colored` [![github](https://img.shields.io/github/stars/nik-rev/simply_colored)](https://github.com/nik-rev/simply_colored)
+## `simply_colored` [![github](https://img.shields.io/github/stars/nik-rev/simply-colored)](https://github.com/nik-rev/simply-colored)
 
 Simplest crate in existence for terminal styles.
 
