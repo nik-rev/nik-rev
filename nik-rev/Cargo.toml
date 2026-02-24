@@ -1,6 +1,6 @@
 [package]
 name = "nik-rev"
-version = "0.1.4"
+version = "0.1.7"
 edition = "2015"
 license = "MIT OR Apache-2.0"
 description = "generates markdown badges in build script, for use in crate-level documentation"
