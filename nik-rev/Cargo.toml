@@ -3,6 +3,6 @@ name = "nik-rev"
 version = "0.1.4"
 edition = "2015"
 license = "MIT OR Apache-2.0"
-description = "tiny helper crate for my own crates"
+description = "generates markdown badges in build script, for use in crate-level documentation"
 
 [dependencies]
